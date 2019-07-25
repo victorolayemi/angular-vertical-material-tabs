@@ -6,30 +6,31 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { IPerson } from './people.service';
+import { IPerson, PeopleService } from './people.service';
 
 @Component({
   selector: 'app-person-edit',
   template: `
-    <form [formGroup]="personForm" (ngSubmit)="onPersonFormSubmit()">
-      <input type="hidden" formControlName="id">
-      <div class="form-group">
-        <label for="firstname">Firstname</label>
-        <input type="text" class="form-control" id="firstname" placeholder="Firstname" formControlName="name">
-      </div>
-      <div class="form-group">
-        <label for="surname">Surname</label>
-        <input type="text" class="form-control" id="surname" placeholder="Surname" formControlName="surname">
-      </div>
-      <div class="form-group">
-        <label for="twitter">Twitter</label>
-        <div class="input-group">
-          <div class="input-group-addon">@</div>
-          <input type="text" class="form-control" id="twitter" placeholder="Surname" formControlName="twitter">
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+      <form [formGroup]="personForm" (ngSubmit)="onPersonFormSubmit()" fxLayout="column">
+          <input type="hidden" formControlName="id">
+
+          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between">
+              <mat-form-field fxFlex>
+                  <input matInput placeholder="First name" id="name" formControlName="name">
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                  <input matInput placeholder="Surname" id="surname" formControlName="surname">
+              </mat-form-field>
+          </div>
+
+          <mat-form-field fxFlex>
+              <span matPrefix>@</span>
+              <input matInput placeholder="Twitter" id="twitter" formControlName="twitter">
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button>Save</button>
+      </form>
   `
 })
 export class PersonEditComponent implements OnInit {
@@ -38,7 +39,8 @@ export class PersonEditComponent implements OnInit {
   @Input() person: IPerson;
   @Output() savePerson = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private peopleService: PeopleService) {
     this.personForm = this.fb.group({
       id: '',
       name: '',
@@ -57,7 +59,6 @@ export class PersonEditComponent implements OnInit {
   }
 
   onPersonFormSubmit() {
-    const dataModel = this.personForm.value;
-    this.savePerson.emit(dataModel);
+    this.peopleService.upsertPerson(this.personForm.value);
   }
 }

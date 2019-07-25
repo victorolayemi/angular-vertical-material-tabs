@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface IPerson {
   id: number;
@@ -11,17 +11,46 @@ export interface IPerson {
 
 @Injectable()
 export class PeopleService {
-  constructor() {
-  }
+  private people: IPerson[];
 
-  getPeople(): Observable<IPerson[]> {
-    return of([
+  public peopleSubject$: Subject<IPerson[]> = new Subject();
+  public people$: Observable<IPerson[]> = this.peopleSubject$.asObservable();
+
+  constructor() {
+    this.upsertPerson(
       {
         id: 1,
         name: 'Juri',
         surname: 'Strumpflohner',
         twitter: '@juristr'
       }
-    ]);
+    );
+  }
+
+  upsertPerson(person: IPerson) {
+    let change = false;
+
+    if (this.people && this.people.length)
+      if (this.people[this.people.length - 1].id === person.id) {
+        change = true;
+        this.people.push(person);
+      } else
+        this.people = this.people.map(
+          man => {
+            if (man.id === person.id) {
+              change = true;
+              return person;
+            }
+            return man;
+          }
+        );
+    else {
+      this.people = [person];
+      change = true;
+    }
+
+    if (!change) this.people.push(person);
+
+    this.peopleSubject$.next(this.people);
   }
 }

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { VerticalTabsModule } from '../../projects/vertical-tabs/src/lib/vertical-tabs.module';
+import { VerticalTabsModule } from '../../projects/vertical-tabs/src/vertical-tabs/vertical-tabs.module';
 import { PeopleModule } from './people/people.module';
 import { PeopleService } from './people/people.service';
 
@@ -20,4 +20,4 @@ import { PeopleService } from './people/people.service';
   providers: [PeopleService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

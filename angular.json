@@ -3,21 +3,22 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-vertical-tabs": {
+    "angular-mat-vertical-tabs": {
+      "projectType": "application",
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-vertical-tabs",
+            "outputPath": "dist/angular-mat-vertical-tabs",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -46,25 +47,32 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-vertical-tabs:build"
+            "browserTarget": "angular-mat-vertical-tabs:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-vertical-tabs:build:production"
+              "browserTarget": "angular-mat-vertical-tabs:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-vertical-tabs:build"
+            "browserTarget": "angular-mat-vertical-tabs:build"
           }
         },
         "test": {
@@ -72,102 +80,166 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               {
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
               "src/styles.css"
             ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
-        }
-      }
-    },
-    "angular-vertical-tabs-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-vertical-tabs:serve"
+            "devServerTarget": "angular-mat-vertical-tabs:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-vertical-tabs:serve:production"
+              "devServerTarget": "angular-mat-vertical-tabs:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
     },
     "vertical-tabs": {
+      "projectType": "application",
+      "schematics": {},
       "root": "projects/vertical-tabs",
       "sourceRoot": "projects/vertical-tabs/src",
-      "projectType": "library",
       "prefix": "ng",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "tsConfig": "projects/vertical-tabs/tsconfig.lib.json",
-            "project": "projects/vertical-tabs/ng-package.json"
+            "outputPath": "dist/vertical-tabs",
+            "index": "projects/vertical-tabs/src/index.html",
+            "main": "projects/vertical-tabs/src/main.ts",
+            "polyfills": "projects/vertical-tabs/src/polyfills.ts",
+            "tsConfig": "projects/vertical-tabs/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/vertical-tabs/src/favicon.ico",
+              "projects/vertical-tabs/src/assets"
+            ],
+            "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
+              "projects/vertical-tabs/src/styles.css"
+            ],
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "project": "projects/vertical-tabs/ng-package.prod.json"
+              "fileReplacements": [
+                {
+                  "replace": "projects/vertical-tabs/src/environments/environment.ts",
+                  "with": "projects/vertical-tabs/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "vertical-tabs:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "vertical-tabs:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "vertical-tabs:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/vertical-tabs/src/test.ts",
+            "polyfills": "projects/vertical-tabs/src/polyfills.ts",
             "tsConfig": "projects/vertical-tabs/tsconfig.spec.json",
-            "karmaConfig": "projects/vertical-tabs/karma.conf.js"
+            "karmaConfig": "projects/vertical-tabs/karma.conf.js",
+            "assets": [
+              "projects/vertical-tabs/src/favicon.ico",
+              "projects/vertical-tabs/src/assets"
+            ],
+            "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
+              "projects/vertical-tabs/src/styles.css"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/vertical-tabs/tsconfig.lib.json",
-              "projects/vertical-tabs/tsconfig.spec.json"
+              "projects/vertical-tabs/tsconfig.app.json",
+              "projects/vertical-tabs/tsconfig.spec.json",
+              "projects/vertical-tabs/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/vertical-tabs/e2e/protractor.conf.js",
+            "devServerTarget": "vertical-tabs:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "vertical-tabs:serve:production"
+            }
+          }
         }
       }
-    }
-  },
-  "defaultProject": "angular-vertical-tabs"
+    }},
+  "defaultProject": "angular-mat-vertical-tabs"
 }

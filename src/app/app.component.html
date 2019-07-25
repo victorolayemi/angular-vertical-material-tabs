@@ -2,7 +2,7 @@
 
 <ng-vertical-tabs>
   <ng-vertical-tab tabTitle="People List">
-    <app-people-list [people]="people" *ngIf="people"
+    <app-people-list [people]="people"
                      (addPerson)="onAddPerson()"
                      (editPerson)="onEditPerson($event)">
     </app-people-list>

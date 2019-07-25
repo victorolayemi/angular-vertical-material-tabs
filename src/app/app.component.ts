@@ -1,24 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+
+import { VerticalTabsComponent } from '../../projects/vertical-tabs/src/vertical-tabs/vertical-tabs.component';
 import { IPerson, PeopleService } from './people/people.service';
-import { VerticalTabsComponent } from '../../projects/vertical-tabs/src/lib/vertical-tabs.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  @ViewChild('personEdit') personEditTemplate;
-  @ViewChild(VerticalTabsComponent) tabsComponent: VerticalTabsComponent;
+export class AppComponent {
+  @ViewChild('personEdit', { static: true }) personEditTemplate;
+  @ViewChild(VerticalTabsComponent, { static: true }) tabsComponent: VerticalTabsComponent;
   people: IPerson[];
 
-  constructor(private peopleService: PeopleService) {
-  }
-
-  ngOnInit() {
-    this.peopleService
-      .getPeople()
-      .subscribe(data => this.people = data);
+  constructor(public peopleService: PeopleService) {
+    this.peopleService.people$.subscribe(
+      people => this.people = people
+    );
   }
 
   onEditPerson(person) {
@@ -41,17 +39,8 @@ export class AppComponent implements OnInit {
       );
   }
 
-  onPersonFormSubmit(dataModel) {
-    if (dataModel.id > 0)
-      this.people = this.people.map(person =>
-        person.id === dataModel.id ? dataModel : person
-      );
-    else {
-      // create a new one
-      dataModel.id = Math.round(Math.random() * 100);
-      this.people.push(dataModel);
-    }
-
+  onPersonFormSubmit(person) {
+    this.peopleService.upsertPerson(person);
     this.tabsComponent.closeActiveTab();
   }
 }
