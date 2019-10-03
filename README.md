@@ -56,7 +56,7 @@ Finally was able to implement new features and resolve existent bugs :)
 
 ---
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.7.
 
 ## Development server
 

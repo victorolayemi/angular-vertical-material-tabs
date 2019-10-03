@@ -1,6 +1,6 @@
 <h1>Vertical tabs</h1>
 
-<ng-vertical-tabs>
+<ng-vertical-tabs *ngIf="people">
   <ng-vertical-tab tabTitle="People List">
     <app-people-list [people]="people" *ngIf="people"
                      (addPerson)="onAddPerson()"
