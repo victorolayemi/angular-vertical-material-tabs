@@ -18,20 +18,20 @@ See [example](src/app). Only difference in your app is your imports:
 
 Then in your template:
 
-    <vertical-material-tabs [multi]=true [selectFirstTab]=false [showSelectAll]=true>
-      <vertical-material-tab tabTitle="Tab 0">
+    <ng-vertical-material-tabs [multi]=true [selectFirstTab]=false [showSelectAll]=true>
+      <ng-vertical-material-tab tabTitle="Tab 0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Mauris tincidunt mattis neque lacinia dignissim.
         Morbi ex orci, bibendum et varius vel, porttitor et magna.
       </vertical-material-tab>
     
-      <vertical-material-tab tabTitle="Tab b">
+      <ng-vertical-material-tab tabTitle="Tab b">
         Curabitur efficitur eleifend nulla, eget porta diam sodales in.
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Maecenas vestibulum libero lacus, et porta ex tincidunt quis.
       </vertical-material-tab>
     
-      <vertical-material-tab tabTitle="Tab 2">
+      <ng-vertical-material-tab tabTitle="Tab 2">
         Sed dictum, diam et vehicula sollicitudin, eros orci viverra diam, et pretium
         risus nisl eget ex. Integer lacinia commodo ipsum, sit amet consectetur magna
         hendrerit eu.
