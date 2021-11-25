@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, ComponentFactoryResolver, ContentChildren, Input, QueryList, ViewChild } from '@angular/core';
 
-import { MatSelectionList } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
 
 import { NgVerticalTabsService } from '../ng-vertical-tabs.service';
 import { NgVerticalTabComponent } from '../ng-vertical-tab/ng-vertical-tab.component';
